@@ -1,0 +1,116 @@
+﻿<Window x:Class="AppShopAdo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AppShopAdo.Utils"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="500" Width="1000">
+    <Window.DataContext>
+        <local:MainViewModelLocator></local:MainViewModelLocator>
+    </Window.DataContext>
+    <Grid DataContext="{Binding ViewModel}" Background="Beige">
+        <TabControl  Background="BlanchedAlmond">
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="10" Width="10" Fill="Black"/>
+                        <TextBlock Margin="3">Good</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="211*"></ColumnDefinition>
+                        <ColumnDefinition Width="575*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10">
+                        <TextBlock>Good Name</TextBlock>
+                        <TextBox Text="{Binding GoodDTOName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock>Category Name</TextBlock>
+                        <ComboBox SelectedIndex="0" ItemsSource="{Binding Categories}"
+                                  SelectedItem="{Binding SelectrdCategoryDTO,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                        <TextBlock>Manufacturer Name</TextBlock>
+                        <ComboBox SelectedIndex="0" ItemsSource="{Binding Manufacturers}"
+                                  SelectedItem ="{Binding SelectedManufacturerDTO,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></ComboBox>
+                        <TextBlock>Count</TextBlock>
+                        <TextBox Text="{Binding GoodDTOCount,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <TextBlock>Price</TextBlock>
+                        <TextBox Text="{Binding GoodDTOPrice,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Command="{Binding AddGoodDTO}">Add</Button>
+                    </StackPanel>
+                    <Grid Grid.Column="1" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="354*"></RowDefinition>
+                            <RowDefinition Height="37*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" SelectedItem="{Binding SelectedGoodDTO}" ItemsSource="{Binding Goods}"></DataGrid>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Margin="5">Update</Button>
+                            <Button Margin="5" Command="{Binding RemoveGoodDTO}">Remove</Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="10" Width="10" Fill="Black"/>
+                        <TextBlock Margin="3">Manufacturer</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="211*"></ColumnDefinition>
+                        <ColumnDefinition Width="575*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10">
+                        <TextBlock>Manufacturer Name</TextBlock>
+                        <TextBox></TextBox>
+                        <Button>Add</Button>
+                    </StackPanel>
+                    <Grid Grid.Column="1" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="354*"></RowDefinition>
+                            <RowDefinition Height="37*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" ItemsSource="{Binding Manufacturers}"></DataGrid>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Margin="5">Update</Button>
+                            <Button Margin="5">Remove</Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+            <TabItem>
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Height="10" Width="10" Fill="Black"/>
+                        <TextBlock Margin="3">Categories</TextBlock>
+                    </StackPanel>
+                </TabItem.Header>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="211*"></ColumnDefinition>
+                        <ColumnDefinition Width="575*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="10">
+                        <TextBlock>Category Name</TextBlock>
+                        <TextBox></TextBox>
+                        <Button>Add</Button>
+                    </StackPanel>
+                    <Grid Grid.Column="1" Margin="10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="354*"></RowDefinition>
+                            <RowDefinition Height="37*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <DataGrid Grid.Row="0" ItemsSource="{Binding Categories}"></DataGrid>
+                        <StackPanel Grid.Row="1" Orientation="Horizontal">
+                            <Button Margin="5">Update</Button>
+                            <Button Margin="5">Remove</Button>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
