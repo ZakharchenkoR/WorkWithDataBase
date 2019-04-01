@@ -61,5 +61,19 @@ namespace BLL.Models.GoodDTO
             repository.Add(temp);
             repository.Save();
         }
+
+        public void Update(GoodDTO Item)
+        {
+            Good temp = new Good
+            {
+                GoodId = Item.Id,
+                ManufacturerId = Item.ManufacturerId,
+                CategoryId = Item.CategoryId,
+                Price = Item.Price,
+                GoodCount = Item.Count
+            };
+            repository.Update(temp);
+            repository.Save();
+        }
     }
 }

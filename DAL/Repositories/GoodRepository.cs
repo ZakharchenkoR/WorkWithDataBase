@@ -38,7 +38,18 @@ namespace DAL.Repositories
 
         public void Update(Good item)
         {
-            throw new NotImplementedException();
+            foreach (var i in db.Good)
+            {
+                if(i.GoodId == item.GoodId)
+                {
+                    i.GoodName = item.GoodName;
+                    i.ManufacturerId = item.ManufacturerId;
+                    i.CategoryId = item.CategoryId;
+                    i.Price = item.Price;
+                    i.GoodCount = item.GoodCount;
+                    break;
+                }
+            }
         }
 
         ~GoodRepository()

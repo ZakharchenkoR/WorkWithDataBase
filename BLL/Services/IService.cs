@@ -11,5 +11,6 @@ namespace BLL.Services
         IEnumerable<T> GetAll();
         void Remove(T item);
         void Add(T item);
+        void Update(T Item);
     }
 }

@@ -38,7 +38,14 @@ namespace DAL.Repositories
 
         public void Update(Manufacturer item)
         {
-            throw new NotImplementedException();
+            foreach (var i in db.Manufacturer)
+            {
+                if (i.ManufacturerId == item.ManufacturerId)
+                {
+                    i.ManufacturerName = item.ManufacturerName;
+                    break;
+                }
+            }
         }
 
         ~ManufacturerRepository()

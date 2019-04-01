@@ -43,5 +43,16 @@ namespace BLL.Services
             repository.Add(temp);
             repository.Save();
         }
+
+        public void Update(CategoryDTO Item)
+        {
+            Category temp = new Category
+            {
+                CategoryId = Item.Id,
+                CategoryName = Item.Name
+            };
+            repository.Update(temp);
+            repository.Save();
+        }
     }
 }

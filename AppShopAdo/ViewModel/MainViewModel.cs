@@ -30,8 +30,26 @@ namespace AppShopAdo.ViewModel
                 Notify();
             }
         }
-        public NotifyCollection<ManufacturerDTO> Manufacturers { get; set; }
-        public NotifyCollection<CategoryDTO> Categories { get; set; }
+        private NotifyCollection<ManufacturerDTO> manufacturers;
+        public NotifyCollection<ManufacturerDTO> Manufacturers
+        {
+            get => manufacturers;
+            set
+            {
+                manufacturers = value;
+                Notify();
+            }
+        }
+        private NotifyCollection<CategoryDTO> categories;
+        public NotifyCollection<CategoryDTO> Categories
+        {
+            get => categories;
+            set
+            {
+                categories = value;
+                Notify();
+            }
+        }
         private GoodDTO selectedGoodDTO;
         public GoodDTO SelectedGoodDTO
         {
@@ -81,7 +99,7 @@ namespace AppShopAdo.ViewModel
                 Notify();
             }
         }
-        public decimal goodDTOCount;
+        private decimal goodDTOCount;
         public decimal GoodDTOCount
         {
             get => goodDTOCount;
@@ -91,7 +109,28 @@ namespace AppShopAdo.ViewModel
                 Notify();
             }
         }
-       
+        private string categoryDTOName;
+        public string CategoryDTOName
+        {
+            get => categoryDTOName;
+            set
+            {
+                categoryDTOName = value;
+                Notify();
+            }
+        }
+        private string manufacturerDTOName;
+
+        public string ManufacturerDTOName
+        {
+            get => manufacturerDTOName;
+            set
+            {
+                manufacturerDTOName = value;
+                Notify();
+            }
+        }
+
         public MainViewModel(IService<GoodDTO> serviceGood, IService<ManufacturerDTO> seviceManufacturer, IService<CategoryDTO> serviceCategory)
         {
             this.serviceGood = serviceGood;
@@ -106,15 +145,29 @@ namespace AppShopAdo.ViewModel
         private void InitializeCommands()
         {
             RemoveGoodDTO = new RelayCommand(x => Goods.Remove(SelectedGoodDTO));
+            RemoveManufacturerDTO = new RelayCommand(x => Manufacturers.Remove(SelectedManufacturerDTO));
+            RemoveCategoryDTO = new RelayCommand(x => Categories.Remove(SelectrdCategoryDTO));
             AddGoodDTO = new RelayCommand(AddToGoods);
+            AddCategoryDTO = new RelayCommand(AddToCategory);
+            AddManufacturerDTO = new RelayCommand(AddToManufacturer);
+            UpdateManufacturerDTO = new RelayCommand(UpdateToManufacturerDTO);
+            UpdateCategoryDTO = new RelayCommand(UpdateToCategoryDTO);
         }
 
         #region Commands
         public ICommand RemoveGoodDTO { get; private set; }
+        public ICommand RemoveManufacturerDTO { get; private set; }
+        public ICommand RemoveCategoryDTO { get; private set; }
         public ICommand AddGoodDTO { get; private set; }
+        public ICommand AddCategoryDTO { get; private set; }
+        public ICommand AddManufacturerDTO { get; private set; }
+        public ICommand UpdateManufacturerDTO { get; private set; }
+        public ICommand UpdateCategoryDTO { get; private set; }
+        public ICommand UpdateGoodDTO { get; private set; }
         #endregion
 
-        public void AddToGoods(object a)
+        #region Methods
+        private void AddToGoods(object a)
         {
             GoodDTO temp = new GoodDTO
             {
@@ -130,6 +183,67 @@ namespace AppShopAdo.ViewModel
             GoodDTOPrice = 0;
             GoodDTOName = string.Empty;
         }
+
+        private void AddToCategory(object a)
+        {
+            CategoryDTO temp = new CategoryDTO
+            {
+                Name = CategoryDTOName
+            };
+            Categories.Adding(temp);
+            Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+            CategoryDTOName = string.Empty;
+        }
+
+        private void AddToManufacturer(object a)
+        {
+            ManufacturerDTO temp = new ManufacturerDTO
+            {
+                Name = ManufacturerDTOName
+            };
+            Manufacturers.Adding(temp);
+            Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+            ManufacturerDTOName = string.Empty;
+        }
+
+        private void UpdateToManufacturerDTO(object a)
+        {
+            ManufacturerDTO temp = new ManufacturerDTO
+            {
+                Id = SelectedManufacturerDTO.Id,
+                Name = SelectedManufacturerDTO.Name
+            };
+            Manufacturers.Update(temp);
+            Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+        }
+
+        private void UpdateToCategoryDTO(object a)
+        {
+            CategoryDTO temp = new CategoryDTO
+            {
+                Id = SelectrdCategoryDTO.Id,
+                Name = SelectrdCategoryDTO.Name
+            };
+            Categories.Update(temp);
+            Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+        }
+
+        private void UpdateToGoodDTO(object a)
+        {
+            GoodDTO temp = new GoodDTO
+            {
+                Id = SelectedGoodDTO.Id,
+                Name = SelectedGoodDTO.Name,
+                ManufacturerId = SelectedGoodDTO.ManufacturerId,
+                CategoryId = SelectedGoodDTO.CategoryId,
+                Price = SelectedGoodDTO.Price,
+                Count = SelectedGoodDTO.Count
+            };
+            Goods.Update(temp);
+            Goods = new NotifyCollection<GoodDTO>(serviceGood);
+        }
+        #endregion
+
         private void Notify([CallerMemberName]string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));

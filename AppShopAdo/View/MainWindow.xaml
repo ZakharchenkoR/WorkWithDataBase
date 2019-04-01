@@ -64,19 +64,23 @@
                         <ColumnDefinition Width="575*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="10">
+                        <Label>Adding:</Label>
                         <TextBlock>Manufacturer Name</TextBlock>
-                        <TextBox></TextBox>
-                        <Button>Add</Button>
+                        <TextBox Text="{Binding ManufacturerDTOName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Margin="150,5,5,5" Command="{Binding AddManufacturerDTO}">Add</Button>
+                        <Label></Label>
+                        <Label>Updating:</Label>
+                        <TextBox Text="{Binding SelectedManufacturerDTO.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Margin="150,5,5,5" Command="{Binding UpdateManufacturerDTO}">Update</Button>
                     </StackPanel>
                     <Grid Grid.Column="1" Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="354*"></RowDefinition>
                             <RowDefinition Height="37*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0" ItemsSource="{Binding Manufacturers}"></DataGrid>
+                        <DataGrid Grid.Row="0" SelectedItem="{Binding SelectedManufacturerDTO}" ItemsSource="{Binding Manufacturers}"></DataGrid>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Button Margin="5">Update</Button>
-                            <Button Margin="5">Remove</Button>
+                            <Button Margin="5" Command="{Binding RemoveManufacturerDTO}">Remove</Button>
                         </StackPanel>
                     </Grid>
                 </Grid>
@@ -94,19 +98,23 @@
                         <ColumnDefinition Width="575*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <StackPanel Margin="10">
+                        <Label>Adding:</Label>
                         <TextBlock>Category Name</TextBlock>
-                        <TextBox></TextBox>
-                        <Button>Add</Button>
+                        <TextBox Text="{Binding CategoryDTOName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Margin="150,5,5,5" Command="{Binding AddCategoryDTO}">Add</Button>
+                        <Label></Label>
+                        <Label>Updating:</Label>
+                        <TextBox Text="{Binding SelectrdCategoryDTO.Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"></TextBox>
+                        <Button Margin="150,5,5,5" Command="{Binding UpdateCategoryDTO}">Update</Button>
                     </StackPanel>
                     <Grid Grid.Column="1" Margin="10">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="354*"></RowDefinition>
                             <RowDefinition Height="37*"></RowDefinition>
                         </Grid.RowDefinitions>
-                        <DataGrid Grid.Row="0" ItemsSource="{Binding Categories}"></DataGrid>
+                        <DataGrid Grid.Row="0" SelectedItem="{Binding SelectrdCategoryDTO}" ItemsSource="{Binding Categories}"></DataGrid>
                         <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <Button Margin="5">Update</Button>
-                            <Button Margin="5">Remove</Button>
+                            <Button Margin="5" Command="{Binding RemoveCategoryDTO}">Remove</Button>
                         </StackPanel>
                     </Grid>
                 </Grid>

@@ -33,5 +33,10 @@ namespace AppShopAdo.Utils
             service.Add(item);
         }
 
+        public void Update(T item)
+        {
+            service.Update(item);
+        }
+
     }
 }

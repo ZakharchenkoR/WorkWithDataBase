@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DAL.Repositories
 {
@@ -33,12 +34,26 @@ namespace DAL.Repositories
 
         public void Save()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void Update(Category item)
         {
-            throw new NotImplementedException();
+            foreach (var i in db.Category)
+            {
+                if(i.CategoryId == item.CategoryId)
+                {
+                    i.CategoryName = item.CategoryName;
+                    break;
+                }
+            }
         }
         
         ~CategoryRepositore()

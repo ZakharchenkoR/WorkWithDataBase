@@ -43,5 +43,16 @@ namespace BLL.Services
             repository.Add(temp);
             repository.Save();
         }
+
+        public void Update(ManufacturerDTO Item)
+        {
+            Manufacturer temp = new Manufacturer
+            {
+                ManufacturerId = Item.Id,
+                ManufacturerName = Item.Name
+            };
+            repository.Update(temp);
+            repository.Save();
+        }
     }
 }
