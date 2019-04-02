@@ -20,6 +20,8 @@ namespace AppShopAdo.ViewModel
         private IService<GoodDTO> serviceGood;
         private IService<ManufacturerDTO> seviceManufacturer;
         private IService<CategoryDTO> serviceCategory;
+
+        #region Properties
         private NotifyCollection<GoodDTO> goods;
         public NotifyCollection<GoodDTO> Goods
         {
@@ -58,6 +60,23 @@ namespace AppShopAdo.ViewModel
             {
                 selectedGoodDTO = value;
                 Notify();
+                foreach (var item in Manufacturers)
+                {
+                    if(item.Id == value.ManufacturerId)
+                    {
+                        SelectedManufacturerDTO = item;
+                        break;
+                    }
+                }
+
+                foreach (var item in Categories)
+                {
+                    if(item.Id == value.CategoryId)
+                    {
+                        SelectrdCategoryDTO = item;
+                        break;
+                    }
+                }
             }
         }
         private ManufacturerDTO selectedManufacturerDTO;
@@ -130,6 +149,7 @@ namespace AppShopAdo.ViewModel
                 Notify();
             }
         }
+        #endregion
 
         public MainViewModel(IService<GoodDTO> serviceGood, IService<ManufacturerDTO> seviceManufacturer, IService<CategoryDTO> serviceCategory)
         {
@@ -152,6 +172,7 @@ namespace AppShopAdo.ViewModel
             AddManufacturerDTO = new RelayCommand(AddToManufacturer);
             UpdateManufacturerDTO = new RelayCommand(UpdateToManufacturerDTO);
             UpdateCategoryDTO = new RelayCommand(UpdateToCategoryDTO);
+            ApplicationClose = new RelayCommand(x => Application.Current.Shutdown());
         }
 
         #region Commands
@@ -164,6 +185,7 @@ namespace AppShopAdo.ViewModel
         public ICommand UpdateManufacturerDTO { get; private set; }
         public ICommand UpdateCategoryDTO { get; private set; }
         public ICommand UpdateGoodDTO { get; private set; }
+        public ICommand ApplicationClose { get; private set; }
         #endregion
 
         #region Methods
@@ -172,8 +194,8 @@ namespace AppShopAdo.ViewModel
             GoodDTO temp = new GoodDTO
             {
                 Name = GoodDTOName,
-                ManufacturerId = SelectedManufacturerDTO.Id as int?,
-                CategoryId = SelectrdCategoryDTO.Id as int?,
+                ManufacturerId = SelectedManufacturerDTO.Id,
+                CategoryId = SelectrdCategoryDTO.Id,
                 Price = GoodDTOPrice,
                 Count = GoodDTOCount
             };
