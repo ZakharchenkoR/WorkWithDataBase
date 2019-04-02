@@ -67,6 +67,7 @@ namespace BLL.Models.GoodDTO
             Good temp = new Good
             {
                 GoodId = Item.Id,
+                GoodName = Item.Name,
                 ManufacturerId = Item.ManufacturerId,
                 CategoryId = Item.CategoryId,
                 Price = Item.Price,

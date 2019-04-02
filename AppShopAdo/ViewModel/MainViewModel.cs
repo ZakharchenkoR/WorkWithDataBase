@@ -60,22 +60,32 @@ namespace AppShopAdo.ViewModel
             {
                 selectedGoodDTO = value;
                 Notify();
-                foreach (var item in Manufacturers)
+                try
                 {
-                    if(item.Id == value.ManufacturerId)
+                    if (value != null)
                     {
-                        SelectedManufacturerDTO = item;
-                        break;
+                        foreach (var item in Manufacturers)
+                        {
+                            if (item.Id == value.ManufacturerId)
+                            {
+                                SelectedManufacturerDTO = item;
+                                break;
+                            }
+                        }
+
+                        foreach (var item in Categories)
+                        {
+                            if (item.Id == value.CategoryId)
+                            {
+                                SelectrdCategoryDTO = item;
+                                break;
+                            }
+                        }
                     }
                 }
-
-                foreach (var item in Categories)
+                catch(Exception ex)
                 {
-                    if(item.Id == value.CategoryId)
-                    {
-                        SelectrdCategoryDTO = item;
-                        break;
-                    }
+                    MessageBox.Show(ex.Message);
                 }
             }
         }
@@ -164,14 +174,15 @@ namespace AppShopAdo.ViewModel
 
         private void InitializeCommands()
         {
-            RemoveGoodDTO = new RelayCommand(x => Goods.Remove(SelectedGoodDTO));
-            RemoveManufacturerDTO = new RelayCommand(x => Manufacturers.Remove(SelectedManufacturerDTO));
-            RemoveCategoryDTO = new RelayCommand(x => Categories.Remove(SelectrdCategoryDTO));
+            RemoveGoodDTO = new RelayCommand(RemoveToGoodDTO);
+            RemoveManufacturerDTO = new RelayCommand(RemoveToManufacturerDTO);
+            RemoveCategoryDTO = new RelayCommand(RemoveToCategoryDTO  );
             AddGoodDTO = new RelayCommand(AddToGoods);
             AddCategoryDTO = new RelayCommand(AddToCategory);
             AddManufacturerDTO = new RelayCommand(AddToManufacturer);
             UpdateManufacturerDTO = new RelayCommand(UpdateToManufacturerDTO);
             UpdateCategoryDTO = new RelayCommand(UpdateToCategoryDTO);
+            UpdateGoodDTO = new RelayCommand(UpdateToGoodDTO);
             ApplicationClose = new RelayCommand(x => Application.Current.Shutdown());
         }
 
@@ -189,80 +200,125 @@ namespace AppShopAdo.ViewModel
         #endregion
 
         #region Methods
+        private void RemoveToGoodDTO(object a)
+        {
+            if(SelectedGoodDTO != null)
+            {
+                Goods.Remove(SelectedGoodDTO);
+            }
+        }
+
+        private void RemoveToManufacturerDTO(object a)
+        {
+            if(SelectedManufacturerDTO != null)
+            {
+                Manufacturers.Remove(SelectedManufacturerDTO);
+            }
+        }
+
+        private void RemoveToCategoryDTO(object a)
+        {
+            if(SelectrdCategoryDTO != null)
+            {
+                Categories.Remove(SelectrdCategoryDTO);
+            }
+        }
+
         private void AddToGoods(object a)
         {
-            GoodDTO temp = new GoodDTO
+           if(SelectedManufacturerDTO != null && SelectrdCategoryDTO != null)
             {
-                Name = GoodDTOName,
-                ManufacturerId = SelectedManufacturerDTO.Id,
-                CategoryId = SelectrdCategoryDTO.Id,
-                Price = GoodDTOPrice,
-                Count = GoodDTOCount
-            };
-            Goods.Adding(temp);
-            Goods = new NotifyCollection<GoodDTO>(serviceGood);
-            GoodDTOCount = 0;
-            GoodDTOPrice = 0;
-            GoodDTOName = string.Empty;
+                if(GoodDTOName != null)
+                {
+                    GoodDTO temp = new GoodDTO
+                    {
+                        Name = GoodDTOName,
+                        ManufacturerId = SelectedManufacturerDTO.Id,
+                        CategoryId = SelectrdCategoryDTO.Id,
+                        Price = GoodDTOPrice,
+                        Count = GoodDTOCount
+                    };
+                    Goods.Adding(temp);
+                    Goods = new NotifyCollection<GoodDTO>(serviceGood);
+                    GoodDTOCount = 0;
+                    GoodDTOPrice = 0;
+                    GoodDTOName = string.Empty;
+                }
+            }
         }
 
         private void AddToCategory(object a)
         {
-            CategoryDTO temp = new CategoryDTO
+            if (CategoryDTOName != null)
             {
-                Name = CategoryDTOName
-            };
-            Categories.Adding(temp);
-            Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
-            CategoryDTOName = string.Empty;
+                CategoryDTO temp = new CategoryDTO
+                {
+                    Name = CategoryDTOName
+                };
+                Categories.Adding(temp);
+                Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+                CategoryDTOName = string.Empty;
+            }
         }
 
         private void AddToManufacturer(object a)
         {
-            ManufacturerDTO temp = new ManufacturerDTO
+            if (ManufacturerDTOName != null)
             {
-                Name = ManufacturerDTOName
-            };
-            Manufacturers.Adding(temp);
-            Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
-            ManufacturerDTOName = string.Empty;
+                ManufacturerDTO temp = new ManufacturerDTO
+                {
+                    Name = ManufacturerDTOName
+                };
+                Manufacturers.Adding(temp);
+                Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+                ManufacturerDTOName = string.Empty;
+            }
         }
 
         private void UpdateToManufacturerDTO(object a)
         {
-            ManufacturerDTO temp = new ManufacturerDTO
+           if(SelectedManufacturerDTO != null)
             {
-                Id = SelectedManufacturerDTO.Id,
-                Name = SelectedManufacturerDTO.Name
-            };
-            Manufacturers.Update(temp);
-            Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+                ManufacturerDTO temp = new ManufacturerDTO
+                {
+                    Id = SelectedManufacturerDTO.Id,
+                    Name = SelectedManufacturerDTO.Name
+                };
+                Manufacturers.Update(temp);
+                Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+            }
         }
 
         private void UpdateToCategoryDTO(object a)
         {
-            CategoryDTO temp = new CategoryDTO
+            if(SelectrdCategoryDTO != null)
             {
-                Id = SelectrdCategoryDTO.Id,
-                Name = SelectrdCategoryDTO.Name
-            };
-            Categories.Update(temp);
-            Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+                CategoryDTO temp = new CategoryDTO
+                {
+                    Id = SelectrdCategoryDTO.Id,
+                    Name = SelectrdCategoryDTO.Name
+                };
+                Categories.Update(temp);
+                Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+            }
         }
 
         private void UpdateToGoodDTO(object a)
         {
-            GoodDTO temp = new GoodDTO
+            if(SelectedGoodDTO != null)
             {
-                Id = SelectedGoodDTO.Id,
-                Name = SelectedGoodDTO.Name,
-                ManufacturerId = SelectedGoodDTO.ManufacturerId,
-                CategoryId = SelectedGoodDTO.CategoryId,
-                Price = SelectedGoodDTO.Price,
-                Count = SelectedGoodDTO.Count
-            };
-            Goods.Update(temp);
-            Goods = new NotifyCollection<GoodDTO>(serviceGood);
+                GoodDTO temp = new GoodDTO
+                {
+                    Id = SelectedGoodDTO.Id,
+                    Name = SelectedGoodDTO.Name,
+                    ManufacturerId = SelectedManufacturerDTO.Id,
+                    CategoryId = SelectrdCategoryDTO.Id,
+                    Price = SelectedGoodDTO.Price,
+                    Count = SelectedGoodDTO.Count
+                };
+                Goods.Update(temp);
+                Goods = new NotifyCollection<GoodDTO>(serviceGood);
+            }
         }
         #endregion
 

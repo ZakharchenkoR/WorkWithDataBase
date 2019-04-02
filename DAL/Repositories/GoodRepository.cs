@@ -1,9 +1,12 @@
 ﻿using DAL.Context;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace DAL.Repositories
 {
@@ -33,14 +36,29 @@ namespace DAL.Repositories
 
         public void Save()
         {
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (DbEntityValidationResult validationError in ex.EntityValidationErrors)
+                {
+                    MessageBox.Show("Object: " + validationError.Entry.Entity.ToString());
+                        foreach (DbValidationError err in validationError.ValidationErrors)
+                        {
+                            MessageBox.Show(err.ErrorMessage + "");
+                        }
+                }
+            }
+
         }
 
         public void Update(Good item)
         {
             foreach (var i in db.Good)
             {
-                if(i.GoodId == item.GoodId)
+                if (i.GoodId == item.GoodId)
                 {
                     i.GoodName = item.GoodName;
                     i.ManufacturerId = item.ManufacturerId;
