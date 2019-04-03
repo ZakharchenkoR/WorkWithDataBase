@@ -50,6 +50,10 @@ namespace DAL.Repositories
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         public void Update(Category item)

@@ -51,6 +51,10 @@ namespace DAL.Repositories
                         }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
         }
 

@@ -77,7 +77,7 @@ namespace AppShopAdo.ViewModel
                         {
                             if (item.Id == value.CategoryId)
                             {
-                                SelectrdCategoryDTO = item;
+                                SelectedCategoryDTO = item;
                                 break;
                             }
                         }
@@ -99,7 +99,7 @@ namespace AppShopAdo.ViewModel
             }
         }
         private CategoryDTO selectedCategoryDTO;
-        public CategoryDTO SelectrdCategoryDTO
+        public CategoryDTO SelectedCategoryDTO
         {
             get => selectedCategoryDTO;
             set
@@ -176,7 +176,7 @@ namespace AppShopAdo.ViewModel
         {
             RemoveGoodDTO = new RelayCommand(RemoveToGoodDTO);
             RemoveManufacturerDTO = new RelayCommand(RemoveToManufacturerDTO);
-            RemoveCategoryDTO = new RelayCommand(RemoveToCategoryDTO  );
+            RemoveCategoryDTO = new RelayCommand(RemoveToCategoryDTO);
             AddGoodDTO = new RelayCommand(AddToGoods);
             AddCategoryDTO = new RelayCommand(AddToCategory);
             AddManufacturerDTO = new RelayCommand(AddToManufacturer);
@@ -202,31 +202,43 @@ namespace AppShopAdo.ViewModel
         #region Methods
         private void RemoveToGoodDTO(object a)
         {
-            if(SelectedGoodDTO != null)
+            if (SelectedGoodDTO != null)
             {
-                Goods.Remove(SelectedGoodDTO);
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this data?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Goods.Remove(SelectedGoodDTO);
+                }
             }
         }
 
         private void RemoveToManufacturerDTO(object a)
         {
-            if(SelectedManufacturerDTO != null)
+            if (SelectedManufacturerDTO != null)
             {
-                Manufacturers.Remove(SelectedManufacturerDTO);
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this data?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Manufacturers.Remove(SelectedManufacturerDTO);
+                }
             }
         }
 
         private void RemoveToCategoryDTO(object a)
         {
-            if(SelectrdCategoryDTO != null)
+            if (SelectedCategoryDTO != null)
             {
-                Categories.Remove(SelectrdCategoryDTO);
+                MessageBoxResult result = MessageBox.Show("Do you want to delete this data?", "Remove", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (result == MessageBoxResult.Yes)
+                {
+                    Categories.Remove(SelectedCategoryDTO);
+                }
             }
         }
 
         private void AddToGoods(object a)
         {
-           if(SelectedManufacturerDTO != null && SelectrdCategoryDTO != null)
+           if(SelectedManufacturerDTO != null && SelectedCategoryDTO != null)
             {
                 if(GoodDTOName != null)
                 {
@@ -234,12 +246,15 @@ namespace AppShopAdo.ViewModel
                     {
                         Name = GoodDTOName,
                         ManufacturerId = SelectedManufacturerDTO.Id,
-                        CategoryId = SelectrdCategoryDTO.Id,
+                        CategoryId = SelectedCategoryDTO.Id,
                         Price = GoodDTOPrice,
                         Count = GoodDTOCount
                     };
                     Goods.Adding(temp);
                     Goods = new NotifyCollection<GoodDTO>(serviceGood);
+                    SelectedCategoryDTO = null;
+                    SelectedManufacturerDTO = null;
+                    SelectedGoodDTO = null;
                     GoodDTOCount = 0;
                     GoodDTOPrice = 0;
                     GoodDTOName = string.Empty;
@@ -285,21 +300,29 @@ namespace AppShopAdo.ViewModel
                     Name = SelectedManufacturerDTO.Name
                 };
                 Manufacturers.Update(temp);
+                SelectedCategoryDTO = null;
+                SelectedManufacturerDTO = null;
+                SelectedGoodDTO = null;
                 Manufacturers = new NotifyCollection<ManufacturerDTO>(seviceManufacturer);
+                Goods = new NotifyCollection<GoodDTO>(serviceGood);
             }
         }
 
         private void UpdateToCategoryDTO(object a)
         {
-            if(SelectrdCategoryDTO != null)
+            if(SelectedCategoryDTO != null)
             {
                 CategoryDTO temp = new CategoryDTO
                 {
-                    Id = SelectrdCategoryDTO.Id,
-                    Name = SelectrdCategoryDTO.Name
+                    Id = SelectedCategoryDTO.Id,
+                    Name = SelectedCategoryDTO.Name
                 };
                 Categories.Update(temp);
+                SelectedCategoryDTO = null;
+                SelectedManufacturerDTO = null;
+                SelectedGoodDTO = null;
                 Categories = new NotifyCollection<CategoryDTO>(serviceCategory);
+                Goods = new NotifyCollection<GoodDTO>(serviceGood);
             }
         }
 
@@ -312,11 +335,14 @@ namespace AppShopAdo.ViewModel
                     Id = SelectedGoodDTO.Id,
                     Name = SelectedGoodDTO.Name,
                     ManufacturerId = SelectedManufacturerDTO.Id,
-                    CategoryId = SelectrdCategoryDTO.Id,
+                    CategoryId = SelectedCategoryDTO.Id,
                     Price = SelectedGoodDTO.Price,
                     Count = SelectedGoodDTO.Count
                 };
                 Goods.Update(temp);
+                SelectedCategoryDTO = null;
+                SelectedManufacturerDTO = null;
+                SelectedGoodDTO = null;
                 Goods = new NotifyCollection<GoodDTO>(serviceGood);
             }
         }

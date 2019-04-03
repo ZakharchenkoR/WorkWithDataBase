@@ -53,10 +53,10 @@
                                     <StackPanel>
                                         <Label FontWeight="Bold">Good Name</Label>
                                         <TextBox Margin="10,0,10,0" Text="{Binding GoodDTOName}"></TextBox>
-                                        <Label FontWeight="Bold">Manufacturer Id</Label>
-                                        <ComboBox Margin="10,0,10,0" SelectedIndex ="0" SelectedItem="{Binding SelectedManufacturerDTO}" ItemsSource="{Binding Manufacturers}"></ComboBox>
-                                        <Label FontWeight="Bold">Category Id</Label>
-                                        <ComboBox Margin="10,0,10,0" SelectedIndex="0" SelectedItem="{Binding SelectrdCategoryDTO}" ItemsSource="{Binding Categories}"></ComboBox>
+                                        <Label FontWeight="Bold">Manufacturer</Label>
+                                        <ComboBox Name="Manufacturer" Margin="10,0,10,0"  SelectedItem="{Binding SelectedManufacturerDTO}" ItemsSource="{Binding Manufacturers}"></ComboBox>
+                                        <Label FontWeight="Bold">Category</Label>
+                                        <ComboBox Name="Category" Margin="10,0,10,0"  SelectedItem="{Binding SelectedCategoryDTO}" ItemsSource="{Binding Categories}"></ComboBox>
                                         <Label FontWeight="Bold">Good Price</Label>
                                         <TextBox Margin="10,0,10,0" Text="{Binding GoodDTOPrice}"></TextBox>
                                         <Label FontWeight="Bold">Good Count</Label>
@@ -71,11 +71,11 @@
                                     <StackPanel>
                                         <Label FontWeight="Bold">Good Name</Label>
                                         <TextBox Margin="10,0,10,0" Text="{Binding SelectedGoodDTO.Name}"></TextBox>
-                                        <Label FontWeight="Bold">Manufacturer Id</Label>
+                                        <Label FontWeight="Bold">Manufacturer</Label>
                                         <ComboBox Margin="10,0,10,0" SelectedIndex ="0" SelectedItem="{Binding SelectedManufacturerDTO,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                   ItemsSource="{Binding Manufacturers}"></ComboBox>
-                                        <Label FontWeight="Bold">Category Id</Label>
-                                        <ComboBox Margin="10,0,10,0" SelectedIndex="0" SelectedItem="{Binding SelectrdCategoryDTO,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+                                        <Label FontWeight="Bold">Category</Label>
+                                        <ComboBox Margin="10,0,10,0" SelectedIndex="0" SelectedItem="{Binding SelectedCategoryDTO,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
                                                   ItemsSource="{Binding Categories}"></ComboBox>
                                         <Label FontWeight="Bold">Good Price</Label>
                                         <TextBox Margin="10,0,10,0" Text="{Binding SelectedGoodDTO.Price}"></TextBox>
@@ -238,7 +238,7 @@
                                     </Expander.Header>
                                     <StackPanel>
                                         <TextBlock Margin="10,10,10,10">Category Name</TextBlock>
-                                        <TextBox Margin="10,10,10,10" Text="{Binding SelectrdCategoryDTO.Name}"></TextBox>
+                                        <TextBox Margin="10,10,10,10" Text="{Binding SelectedCategoryDTO.Name}"></TextBox>
                                         <Button Margin="10,10,10,10" Command="{Binding UpdateCategoryDTO}">Update</Button>
                                     </StackPanel>
                                 </Expander>
@@ -247,7 +247,7 @@
                     </Grid>
                     <Grid Margin="200,60,0,40">
                         <!--<DataGrid Grid.Row="0" SelectedItem="{Binding SelectrdCategoryDTO}" ItemsSource="{Binding Categories}"></DataGrid>-->
-                        <DataGrid x:Name="CategoriesGrid" SelectedItem="{Binding SelectrdCategoryDTO}"
+                        <DataGrid x:Name="CategoriesGrid" SelectedItem="{Binding SelectedCategoryDTO}"
                                   ItemsSource="{Binding Categories}"
                                   AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
                                        RowBackground="LightGray" AlternatingRowBackground="White">
