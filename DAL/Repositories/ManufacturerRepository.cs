@@ -59,11 +59,13 @@ namespace DAL.Repositories
 
         public void Update(Manufacturer item)
         {
+           
             foreach (var i in db.Manufacturer)
             {
                 if (i.ManufacturerId == item.ManufacturerId)
                 {
                     i.ManufacturerName = item.ManufacturerName;
+                    db.Entry(i).State = EntityState.Modified;
                     break;
                 }
             }

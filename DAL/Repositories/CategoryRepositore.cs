@@ -1,6 +1,7 @@
 ﻿using DAL.Context;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
@@ -63,6 +64,7 @@ namespace DAL.Repositories
                 if(i.CategoryId == item.CategoryId)
                 {
                     i.CategoryName = item.CategoryName;
+                    db.Entry(i).State = EntityState.Modified;
                     break;
                 }
             }

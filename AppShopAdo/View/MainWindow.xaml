@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AppShopAdo.Utils"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:dragablz="clr-namespace:Dragablz;assembly=Dragablz"
         Title="ShopAdo" Height="600" Width="1080" Foreground="White" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowStyle="None">
     <Window.DataContext>
         <local:MainViewModelLocator></local:MainViewModelLocator>
@@ -56,7 +57,7 @@
                                         <Label FontWeight="Bold">Manufacturer</Label>
                                         <ComboBox Name="Manufacturer" Margin="10,0,10,0"  SelectedItem="{Binding SelectedManufacturerDTO}" ItemsSource="{Binding Manufacturers}"></ComboBox>
                                         <Label FontWeight="Bold">Category</Label>
-                                        <ComboBox Name="Category" Margin="10,0,10,0"  SelectedItem="{Binding SelectedCategoryDTO}" ItemsSource="{Binding Categories}"></ComboBox>
+                                        <ComboBox Name="Category" Margin="10,0,10,0"   SelectedItem="{Binding SelectedCategoryDTO}" ItemsSource="{Binding Categories}"></ComboBox>
                                         <Label FontWeight="Bold">Good Price</Label>
                                         <TextBox Margin="10,0,10,0" Text="{Binding GoodDTOPrice}"></TextBox>
                                         <Label FontWeight="Bold">Good Count</Label>
@@ -171,7 +172,9 @@
                         <DataGrid x:Name="ManufacturerGrid" SelectedItem="{Binding SelectedManufacturerDTO}"
                                   ItemsSource="{Binding Manufacturers}"
                                   AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                                       RowBackground="LightGray" AlternatingRowBackground="White">
+                                       RowBackground="LightGray" AlternatingRowBackground="White"
+                                  CanUserAddRows="False"
+                                  >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="*" />
                                 <DataGridHyperlinkColumn Header="ManufacturerName" Binding="{Binding Path=Name}" Width="10*"/>
@@ -250,7 +253,9 @@
                         <DataGrid x:Name="CategoriesGrid" SelectedItem="{Binding SelectedCategoryDTO}"
                                   ItemsSource="{Binding Categories}"
                                   AutoGenerateColumns="False" HorizontalGridLinesBrush="DarkGray"
-                                       RowBackground="LightGray" AlternatingRowBackground="White">
+                                       RowBackground="LightGray" AlternatingRowBackground="White"
+                                  CanUserAddRows="False"
+                                  >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="*" />
                                 <DataGridHyperlinkColumn Header="ManufacturerName" Binding="{Binding Path=Name}" Width="10*"/>

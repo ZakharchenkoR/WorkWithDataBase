@@ -69,6 +69,7 @@ namespace DAL.Repositories
                     i.CategoryId = item.CategoryId;
                     i.Price = item.Price;
                     i.GoodCount = item.GoodCount;
+                    db.Entry(i).State = EntityState.Modified;
                     break;
                 }
             }
