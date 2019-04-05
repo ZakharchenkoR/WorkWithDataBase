@@ -12,7 +12,17 @@ namespace DAL.Repositories
 {
     public class CategoryRepositore : IRepository<Category>
     {
-        ShopAdo db = new ShopAdo();
+        ShopAdo db;
+
+        public CategoryRepositore()
+        {
+            db = new ShopAdo();
+        }
+
+        public CategoryRepositore(ShopAdo db)
+        {
+            this.db = db;
+        }
 
         public void Add(Category item)
         {

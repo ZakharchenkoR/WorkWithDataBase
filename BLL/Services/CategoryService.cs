@@ -1,6 +1,6 @@
 ﻿using BLL.Models.CategoryDTO;
 using DAL.Context;
-using DAL.Repositories;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +11,17 @@ namespace BLL.Services
 {
     public class CategoryService : IService<CategoryDTO>
     {
-        IRepository<Category> repository;
-
-        public CategoryService(IRepository<Category> repository)
+        private IUnitOfWork unitOfWork;
+        public CategoryService(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
+        
 
         public IEnumerable<CategoryDTO> GetAll()
         {
-            return repository.GetAll().Select(x => new CategoryDTO
+            
+            return unitOfWork.Category.GetAll().Select(x => new CategoryDTO
             {
                 Id = x.CategoryId,
                 Name = x.CategoryName
@@ -29,8 +30,8 @@ namespace BLL.Services
 
         public void Remove(CategoryDTO item)
         {
-            repository.Delete(repository.Get(item.Id));
-            repository.Save();
+            unitOfWork.Category.Delete(unitOfWork.Category.Get(item.Id));
+            unitOfWork.Save();
         }
 
         public void Add(CategoryDTO item)
@@ -40,8 +41,8 @@ namespace BLL.Services
                 CategoryName = item.Name
             };
 
-            repository.Add(temp);
-            repository.Save();
+            unitOfWork.Category.Add(temp);
+            unitOfWork.Save();
         }
 
         public void Update(CategoryDTO Item)
@@ -51,8 +52,8 @@ namespace BLL.Services
                 CategoryId = Item.Id,
                 CategoryName = Item.Name
             };
-            repository.Update(temp);
-            repository.Save();
+            unitOfWork.Category.Update(temp);
+            unitOfWork.Save();
         }
     }
 }

@@ -89,6 +89,8 @@
     <Compile Include="Repositories\GoodRepository.cs" />
     <Compile Include="Repositories\IRepository.cs" />
     <Compile Include="Repositories\ManufacturerRepository.cs" />
+    <Compile Include="UnitOfWork\IUnitOfWork.cs" />
+    <Compile Include="UnitOfWork\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="Context\Model1.edmx">

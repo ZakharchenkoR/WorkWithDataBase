@@ -9,6 +9,7 @@ using BLL.Models.ManufacturerDTO;
 using BLL.Services;
 using DAL.Context;
 using DAL.Repositories;
+using DAL.UnitOfWork;
 using Ninject.Modules;
 
 namespace BLL.Modules
@@ -23,6 +24,7 @@ namespace BLL.Modules
             Bind<IService<ManufacturerDTO>>().To<ManufacturerService>();
             Bind<IRepository<Category>>().To<CategoryRepositore>();
             Bind<IService<CategoryDTO>>().To<CategoryService>();
+            Bind<IUnitOfWork>().To<UnitOfWork>();
         }
     }
 }

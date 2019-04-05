@@ -258,7 +258,7 @@
                                   >
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Id}" Width="*" />
-                                <DataGridHyperlinkColumn Header="ManufacturerName" Binding="{Binding Path=Name}" Width="10*"/>
+                                <DataGridHyperlinkColumn Header="CategoryName" Binding="{Binding Path=Name}" Width="10*"/>
                             </DataGrid.Columns>
                         </DataGrid>
                     </Grid>

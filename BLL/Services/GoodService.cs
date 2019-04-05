@@ -1,6 +1,6 @@
 ﻿using BLL.Services;
 using DAL.Context;
-using DAL.Repositories;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,15 +12,15 @@ namespace BLL.Models.GoodDTO
 {
     public class GoodService : IService<GoodDTO>
     {
-        private IRepository<Good> repository;
-        public GoodService(IRepository<Good> repository)
+        private IUnitOfWork unitOfWork;
+        public GoodService(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         public IEnumerable<GoodDTO> GetAll()
         {
-            return repository.GetAll()
+            return unitOfWork.Good.GetAll()
                 .Select(x => new GoodDTO
                 {
                     Id = x.GoodId,
@@ -38,13 +38,13 @@ namespace BLL.Models.GoodDTO
         {
             try
             {
-                repository.Delete(repository.Get(item.Id));
+                unitOfWork.Good.Delete(unitOfWork.Good.Get(item.Id));
             }
             catch(Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            repository.Save();
+            unitOfWork.Save();
         }
 
         public void Add(GoodDTO item)
@@ -58,8 +58,8 @@ namespace BLL.Models.GoodDTO
                 GoodCount = item.Count
             };
 
-            repository.Add(temp);
-            repository.Save();
+            unitOfWork.Good.Add(temp);
+            unitOfWork.Save();
         }
 
         public void Update(GoodDTO Item)
@@ -73,8 +73,8 @@ namespace BLL.Models.GoodDTO
                 Price = Item.Price,
                 GoodCount = Item.Count
             };
-            repository.Update(temp);
-            repository.Save();
+            unitOfWork.Good.Update(temp);
+            unitOfWork.Save();
         }
     }
 }

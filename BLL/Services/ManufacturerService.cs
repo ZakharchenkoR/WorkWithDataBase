@@ -1,6 +1,6 @@
 ﻿using BLL.Models.ManufacturerDTO;
 using DAL.Context;
-using DAL.Repositories;
+using DAL.UnitOfWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,16 +11,16 @@ namespace BLL.Services
 {
     public class ManufacturerService : IService<ManufacturerDTO>
     {
-        IRepository<Manufacturer> repository;
+        private IUnitOfWork unitOfWork;
 
-        public ManufacturerService(IRepository<Manufacturer> repository)
+        public ManufacturerService(IUnitOfWork unitOfWork)
         {
-            this.repository = repository;
+            this.unitOfWork = unitOfWork;
         }
 
         public IEnumerable<ManufacturerDTO> GetAll()
         {
-            return repository.GetAll().Select(x => new ManufacturerDTO
+            return unitOfWork.Manufacturer.GetAll().Select(x => new ManufacturerDTO
             {
                 Id = x.ManufacturerId,
                 Name = x.ManufacturerName
@@ -29,8 +29,8 @@ namespace BLL.Services
 
         public void Remove(ManufacturerDTO item)
         {
-            repository.Delete(repository.Get(item.Id));
-            repository.Save();
+            unitOfWork.Manufacturer.Delete(unitOfWork.Manufacturer.Get(item.Id));
+            unitOfWork.Save();
         }
 
 
@@ -40,8 +40,8 @@ namespace BLL.Services
             {
                 ManufacturerName = item.Name
             };
-            repository.Add(temp);
-            repository.Save();
+            unitOfWork.Manufacturer.Add(temp);
+            unitOfWork.Save();
         }
 
         public void Update(ManufacturerDTO Item)
@@ -51,8 +51,8 @@ namespace BLL.Services
                 ManufacturerId = Item.Id,
                 ManufacturerName = Item.Name
             };
-            repository.Update(temp);
-            repository.Save();
+            unitOfWork.Manufacturer.Update(temp);
+            unitOfWork.Save();
         }
     }
 }

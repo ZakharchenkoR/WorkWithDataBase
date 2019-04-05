@@ -12,8 +12,18 @@ namespace DAL.Repositories
 {
     public class GoodRepository : IRepository<Good>
     {
-        ShopAdo db = new ShopAdo();
+        ShopAdo db;
      
+        public GoodRepository()
+        {
+            db = new ShopAdo();
+        }
+
+        public GoodRepository(ShopAdo db)
+        {
+            this.db = db;
+        }
+
         public void Add(Good item)
         {
             db.Good.Add(item);

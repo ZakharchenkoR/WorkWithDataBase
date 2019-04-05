@@ -12,7 +12,17 @@ namespace DAL.Repositories
 {
     public class ManufacturerRepository : IRepository<Manufacturer>
     {
-        ShopAdo db = new ShopAdo();
+        ShopAdo db;
+
+        public ManufacturerRepository()
+        {
+            db = new ShopAdo();
+        }
+
+        public ManufacturerRepository(ShopAdo db)
+        {
+            this.db = db;
+        }
 
         public void Add(Manufacturer item)
         {
